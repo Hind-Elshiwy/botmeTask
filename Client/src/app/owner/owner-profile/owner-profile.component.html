@@ -1,0 +1,59 @@
+<div *ngIf="error" class="alert alert-danger" role="alert">
+  <p>{{error}}</p>
+</div>
+<div class="container">
+
+  <form #editForm="ngForm" (ngSubmit)="editForm.valid &&onSubmit(editForm)">
+    <table class="table table-striped table-inverse table-responsive m-auto">
+      <tbody>
+        <tr>
+          <td class="align-middle">Name</td>
+          <td> <input type="text" #name="ngModel" name="name" required [readonly]="uneditable" placeholder="Full Name"
+              [ngClass]="{'form-control-plaintext beforeEdit':uneditable ,'form-control afterEdit':!uneditable ,'invalid-textbox' :editForm.submitted && !name.valid}"
+              [ngModel]="userDetails?.name" (ngModelChange)="userDetails.name = $event">
+            <div *ngIf="editForm.submitted && !name.valid">
+              <label class="text-danger">This field is required.</label>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="align-middle">Email</td>
+          <td> <input type="text" #email="ngModel" name="email" [readonly]="uneditable" required [pattern]="emailRegex"
+              placeholder="Email"
+              [ngClass]="{'form-control-plaintext beforeEdit':uneditable ,'form-control afterEdit':!uneditable ,'invalid-textbox' :editForm.submitted && !email.valid}"
+              [ngModel]="userDetails?.email" (ngModelChange)="userDetails.email = $event">
+            <div *ngIf="editForm.submitted && email.errors">
+              <label *ngIf="email.errors.required" class="text-danger">This field is required.</label>
+              <label *ngIf="email.errors.pattern" class="text-danger">Invalid email address.</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <ng-container *ngIf="uneditable; else elseTemplate">
+            <td colspan="2" class="align-middle text-center"><button type="button" class="btn btn-warning"
+                (click)="onEdit()">Edit</button></td>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <td colspan="2" class="align-middle text-center">
+              <input type="submit" class="btn btn-success" value="Save">
+            </td>
+          </ng-template>
+        </tr>
+
+        <tr *ngIf="showSucessMessage" class="align-middle text-center alert alert-success">
+          <td colspan="2">
+            <strong>Updated successfully.</strong>
+          </td>
+        </tr>
+
+        <tr *ngIf="serverError" class="align-middle text-center alert alert-danger">
+          <td colspan="2">
+            <strong>{{serverError}}</strong>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </form>
+</div>

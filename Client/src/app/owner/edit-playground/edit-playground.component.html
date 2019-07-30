@@ -1,0 +1,51 @@
+<div class="container" style="width: 500px;">
+
+  <div *ngIf="serverError" class="alert alert-danger" role="alert">
+    <strong>{{serverError}}</strong>
+  </div>
+
+  <form #playgroundForm="ngForm" (ngSubmit)="playgroundForm.valid && onSubmit(playgroundForm)">
+
+    <div class="form-group">
+      <label for="product">Product Name</label>
+      <input type="text" #name="ngModel" name="name" id="product" class="form-control" placeholder="Playground Name"
+        required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !name.valid }"
+        [(ngModel)]="newPlayground.name">
+      <div *ngIf="playgroundForm.submitted && !name.valid">
+        <label class="text-danger">Product name is required.</label>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="desc">Description</label>
+      <input type="text" #address="ngModel" name="desc" id="desc" class="form-control" placeholder="Address"
+        required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !desc.valid }"
+        [(ngModel)]="newPlayground.desc">
+      <div *ngIf="playgroundForm.submitted && !desc.valid">
+        <label class="text-danger">Description is required.</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" min="1" #price="ngModel" name="price" id="price" class="form-control" placeholder="Price"
+        required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !price.valid }"
+        [(ngModel)]="newPlayground.price">
+      <div *ngIf="playgroundForm.submitted && !price.valid">
+        <label class="text-danger">Price is required.</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="photo">Product Image</label>
+      <input #imageInput name="img" id="photo" class="form-control" type="file" accept="image/*"
+        [ngClass]="{'invalid-textbox':playgroundForm.submitted && !imageInput.value }"
+        (change)="processFile(imageInput)">
+
+
+    </div>
+
+    <input type="submit" class="btn btn-warning" value="Edit">
+  </form>
+</div>
