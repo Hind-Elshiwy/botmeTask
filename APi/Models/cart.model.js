@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 let cartSchema = new mongoose.Schema({
     items: { type: Number},
     totalQty: { type: Number},
-    totalPrice: { type: Number },
+    totalPrice: { type: Number }
 
 
 });
