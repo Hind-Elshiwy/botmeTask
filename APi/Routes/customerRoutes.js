@@ -9,17 +9,17 @@ let productSchema = require("../Models/product.model");
 
 productRoutes.use(authenticate);
 // List products
-productRoutes.get("", (req, res) => {
-    productSchema.find({}, (err, result) => {
-        if (err) {
-            return next(err);
-        }
-        else {
-            console.log(result);
-            res.status(200).send(result);
-        }
-    });
-});
+// productRoutes.get("", (req, res) => {
+//     productSchema.find({}, (err, result) => {
+//         if (err) {
+//             return next(err);
+//         }
+//         else {
+//             console.log(result);
+//             res.status(200).send(result);
+//         }
+//     });
+// });
 
 
 productRoutes.get("/add-to-cart/:id", (req, res) => {
