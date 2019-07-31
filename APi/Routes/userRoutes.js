@@ -8,6 +8,7 @@ const authenticate = require("../middleware/jwt");
 let User = require("../Models/user.model");
 let ownerSchema = require('../Models/owner.model');
 let customerSchema = require('../Models/customer.model');
+let Cart=require('../Models/cart.model');
 
 userRoutes.post("/signup", (request, response, next) => {
     console.log(request.body);
@@ -18,6 +19,8 @@ userRoutes.post("/signup", (request, response, next) => {
     };
     if (request.body.role === "customer") {
         user = new customerSchema(user);
+
+
     }
     else if (request.body.role === "owner") {
         user = new ownerSchema(user);
@@ -28,6 +31,8 @@ userRoutes.post("/signup", (request, response, next) => {
     user.save((err, user) => {
         if (!err) {
             response.status(200).json({ "token": user.generateJwt() });
+            //creat cart with registering a user , so every user will have one cart 
+            var cart=new Cart();
         } else {
             console.log(err);
             if (err.code == 11000)

@@ -68,16 +68,16 @@ ownerRoutes.put("/:id", upload.single("mainImg"), (req, res, next) => {
         })
 })
 // Get all products
-ownerRoutes.get("", (req, res, next) => {
-    productSchema.find({}, (err, result) => {
-        if (err) {
-            return next(err);
-        }
-        else {
-            res.status(200).send(result);
-        }
-    });
-})
+// ownerRoutes.get("", (req, res, next) => {
+//     productSchema.find({}, (err, result) => {
+//         if (err) {
+//             return next(err);
+//         }
+//         else {
+//             res.status(200).send(result);
+//         }
+//     });
+// })
 
 
 

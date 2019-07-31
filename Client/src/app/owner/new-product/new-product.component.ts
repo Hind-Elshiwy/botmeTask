@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class NewProductComponent implements OnInit {
 
-  cities = environment.cities;
   image;
   newPlayground: Product = {
     name: '',

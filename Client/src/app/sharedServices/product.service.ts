@@ -28,7 +28,7 @@ export class ProductService {
   };
 
   getAll() {
-    return this.http.get(environment.apiBaseUrl + '/product');
+    return this.http.get(environment.apiBaseUrl + '/shop');
   }
 
   details(id) {

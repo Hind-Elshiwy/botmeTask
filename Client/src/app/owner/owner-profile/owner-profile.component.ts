@@ -11,7 +11,6 @@ import { User } from 'src/app/user/user.model';
   styleUrls: ['./owner-profile.component.css']
 })
 export class OwnerProfileComponent implements OnInit {
-  cities = environment.cities;
 
   constructor(private userService: UserService, private router: Router) { }
   emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

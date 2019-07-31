@@ -15,12 +15,14 @@ import { CustomerProfileComponent } from './customer/customer-profile/customer-p
 import { OwnerProfileComponent } from './owner/owner-profile/owner-profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { ShoppingCartComponent } from './customer/shoppingCart/shoppingCart.component';
+import { CustomerComponent } from './customer/customer/customer.component';
 import { OwnerComponent } from './owner/owner/owner.component';
 import { OwnerProductsComponent } from './owner/owner-products/owner-products.component';
 import { NewProductComponent } from './owner/new-product/new-product.component';
 import { EditProductComponent } from './owner/edit-product/edit-product.component';
 import { BrandPlaygroundsComponent } from './customer/brand/brand.component';
+import { ShoppingCartComponent } from './customer/shopping-cart/shopping-cart.component';
+import { WishlistComponent } from './customer/wishlist/wishlist.component';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { BrandPlaygroundsComponent } from './customer/brand/brand.component';
     OwnerProductsComponent,
     NewProductComponent,
     EditProductComponent,
+    CustomerComponent,
     ShoppingCartComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,

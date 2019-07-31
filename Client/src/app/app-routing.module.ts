@@ -12,12 +12,16 @@ import { OwnerGuard } from './auth/owner.guard';
 import { CustomerGuard } from './auth/customer.guard';
 import { SignGuard } from './auth/sign.guard';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { ShoppingCartComponent } from './customer/shoppingCart/shoppingCart.component';
+import { CustomerComponent } from './customer/customer/customer.component';
 import { OwnerComponent } from './owner/owner/owner.component';
 import { OwnerProductsComponent } from './owner/owner-products/owner-products.component';
 import { NewProductComponent } from './owner/new-product/new-product.component';
 import { EditProductComponent } from './owner/edit-product/edit-product.component';
 import { BrandPlaygroundsComponent } from './customer/brand/brand.component';
+import { ShoppingCartComponent } from './customer/shopping-cart/shopping-cart.component';
+import { WishlistComponent } from './customer/wishlist/wishlist.component';
+
+
 
 const routes: Routes = [
   {
@@ -29,12 +33,14 @@ const routes: Routes = [
     children: [{ path: '', component: SignInComponent, canActivate: [SignGuard] }]
   },
   {
-    path: 'customer', component: ShoppingCartComponent, canActivate: [AuthGuard, CustomerGuard],
+    path: 'customer', component: CustomerComponent, canActivate: [AuthGuard, CustomerGuard],
     children: [{ path: 'profile', component: CustomerProfileComponent },
     { path: 'brand', component: BrandPlaygroundsComponent },
+    { path: 'shoppingCart', component: ShoppingCartComponent },
+    { path: 'wishlist', component: WishlistComponent },
     { path: '', redirectTo: '/customer/profile', pathMatch: 'full' }
     ]
-  },
+  },  
   {
     path: 'owner', component: OwnerComponent, canActivate: [AuthGuard, OwnerGuard],
     children: [{ path: 'profile', component: OwnerProfileComponent },
