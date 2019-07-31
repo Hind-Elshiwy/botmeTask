@@ -7,14 +7,15 @@ let productSchema = require("../Models/product.model");
 
 
 
-
+productRoutes.use(authenticate);
 // List products
-productRoutes.get("/", (req, res) => {
+productRoutes.get("", (req, res) => {
     productSchema.find({}, (err, result) => {
         if (err) {
             return next(err);
         }
         else {
+            console.log(result);
             res.status(200).send(result);
         }
     });
@@ -50,36 +51,4 @@ productRoutes.get("/shopping-cart", (req, res,next) => {
 
 
 
-// appointmentRoutes.put("/:id", (req, res, next) => {
-//     appointmentSchema.update({ _id: req.params.id },
-//         { $set: { dateAndTime: req.body.date } },
-//         (err) => {
-//             if (err) {
-//                 return next(err);
-//             }
-//             else {
-//                 appointmentSchema.findById(req.params.id, (err, result) => {
-//                     console.log(result);
-//                     if (!err) {
-//                         res.status(200).send(result);
-//                     }
-//                     else {
-//                         return next(err);
-//                     }
-//                 })
-//             }
-//         });
-// });
-
-// appointmentRoutes.delete("/:id", (req, res) => {
-//     appointmentSchema.deleteOne({ _id: req.params.id },
-//         (err, result) => {
-//             if (err) {
-//                 return next(err);
-//             }
-//             else {
-//                 res.status(200).send({ msg: "Deleted Successfully" });
-//             }
-//         });
-// });
 module.exports = productRoutes;

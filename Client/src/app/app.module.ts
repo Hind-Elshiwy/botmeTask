@@ -11,20 +11,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { PlayerProfileComponent } from './player/player-profile/player-profile.component';
+import { CustomerProfileComponent } from './customer/customer-profile/customer-profile.component';
 import { OwnerProfileComponent } from './owner/owner-profile/owner-profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { PlayerComponent } from './player/player/player.component';
+import { ShoppingCartComponent } from './customer/shoppingCart/shoppingCart.component';
 import { OwnerComponent } from './owner/owner/owner.component';
-import { OwnerPlaygroundsComponent } from './owner/owner-playgrounds/owner-playgrounds.component';
-import { NewPlaygroundComponent } from './owner/new-playground/new-playground.component';
-import { EditPlaygroundComponent } from './owner/edit-playground/edit-playground.component';
-import { PlaygroundsComponent } from './player/playgrounds/playgrounds.component';
-import { MatchTimeComponent } from './player/match-time/match-time.component';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { MyMatchesComponent } from './player/my-matches/my-matches.component';
-import { ReservationsComponent } from './owner/reservations/reservations.component'; // for FullCalendar!
+import { OwnerProductsComponent } from './owner/owner-products/owner-products.component';
+import { NewProductComponent } from './owner/new-product/new-product.component';
+import { EditProductComponent } from './owner/edit-product/edit-product.component';
+import { BrandPlaygroundsComponent } from './customer/brand/brand.component';
 
 
 @NgModule({
@@ -33,26 +29,23 @@ import { ReservationsComponent } from './owner/reservations/reservations.compone
     UserComponent,
     SignUpComponent,
     SignInComponent,
-    PlayerProfileComponent,
+    CustomerProfileComponent,
     OwnerProfileComponent,
     NotFoundComponent,
     NotAuthorizedComponent,
-    PlayerComponent,
+    BrandPlaygroundsComponent,
     OwnerComponent,
-    OwnerPlaygroundsComponent,
-    NewPlaygroundComponent,
-    EditPlaygroundComponent,
-    PlaygroundsComponent,
-    MatchTimeComponent,
-    MyMatchesComponent,
-    ReservationsComponent,
+    OwnerProductsComponent,
+    NewProductComponent,
+    EditProductComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FullCalendarModule // for FullCalendar!
+    // FullCalendarModule // for FullCalendar!
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

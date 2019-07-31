@@ -1,7 +1,7 @@
 let express = require("express"),
     multer = require("multer");
 
-let productRoutes = express.Router();
+let ownerRoutes = express.Router();
 let productSchema = require("../Models/product.model");
 
 // multer
@@ -24,7 +24,8 @@ const upload = multer(
 );
 // ===============================================================
 
-productRoutes.post("", upload.single("mainImg"), (req, res, next) => {
+ownerRoutes.use(authenticate);
+ownerRoutes.post("", upload.single("mainImg"), (req, res, next) => {
     console.log(req.body);
     console.log(req.file);
     req.body.mainImg = req.file.path;
@@ -41,7 +42,7 @@ productRoutes.post("", upload.single("mainImg"), (req, res, next) => {
     })
 })
 
-productRoutes.put("/:id", upload.single("mainImg"), (req, res, next) => {
+ownerRoutes.put("/:id", upload.single("mainImg"), (req, res, next) => {
     if (req.file) {
         req.body.mainImg = req.file.path;
     }
@@ -67,7 +68,7 @@ productRoutes.put("/:id", upload.single("mainImg"), (req, res, next) => {
         })
 })
 // Get all products
-productRoutes.get("", (req, res, next) => {
+ownerRoutes.get("", (req, res, next) => {
     productSchema.find({}, (err, result) => {
         if (err) {
             return next(err);
@@ -81,7 +82,7 @@ productRoutes.get("", (req, res, next) => {
 
 
 // Get all products for current owner
-productRoutes.get("/owner", (req, res, next) => {
+ownerRoutes.get("/owner", (req, res, next) => {
     productSchema.find({ owner: req._id }, (err, result) => {
         if (err) {
             return next(err);
@@ -92,7 +93,7 @@ productRoutes.get("/owner", (req, res, next) => {
     });
 })
 
-productRoutes.get("/:id", (req, res, next) => {
+ownerRoutes.get("/:id", (req, res, next) => {
     productSchema.findById(req.params.id, (err, result) => {
         if (err) {
             return next(err);
@@ -103,7 +104,7 @@ productRoutes.get("/:id", (req, res, next) => {
     });
 });
 
-productRoutes.delete("/:id", (req, res, next) => {
+ownerRoutes.delete("/:id", (req, res, next) => {
     productSchema.deleteOne({ _id: req.params.id }, (err, result) => {
         if (err) {
             return next(err);
@@ -115,4 +116,4 @@ productRoutes.delete("/:id", (req, res, next) => {
 })
 
 
-module.exports = productRoutes;
+module.exports = ownerRoutes;

@@ -1,15 +1,15 @@
-import { UserService } from './../../user/user.service';
+import { UserService } from '../../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-player-profile',
-  templateUrl: './player-profile.component.html',
-  styleUrls: ['./player-profile.component.css']
+  selector: 'app-customer-profile',
+  templateUrl: './customer-profile.component.html',
+  styleUrls: ['./customer-profile.component.css']
 })
-export class PlayerProfileComponent implements OnInit {
+export class CustomerProfileComponent implements OnInit {
   cities = environment.cities;
 
   constructor(private userService: UserService, private router: Router) { }

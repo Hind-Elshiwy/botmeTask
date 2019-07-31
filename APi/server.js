@@ -15,7 +15,8 @@ const server = express();
 
 mongoose.connect(
     "mongodb://localhost:27017/botme",
-    { useNewUrlParser: true },
+    {  useCreateIndex: true ,
+       useNewUrlParser: true },
     error => {
         if (error) {
             console.log("DB Connection Error " + error);
@@ -31,7 +32,7 @@ server.use(bodyParser.json());
 
 server.use("/user", userRoutes);
 // Authentication midleware
-server.use(authenticate);
+// server.use(authenticate);
 
 server.get('/', (req, res) => {
     console.log(req._id);

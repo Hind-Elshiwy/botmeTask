@@ -1,0 +1,25 @@
+
+
+  <div *ngIf="serverError" class="alert alert-danger" role="alert">
+      <strong>{{serverError}}</strong>
+    </div>
+<div *ngIf="ProductList.length==0" class="alert alert-info text-center" role="alert">
+    <strong>No Products Added</strong>
+  </div>
+
+
+  <div class="row">
+    <div *ngFor="let product of ProductList" class="card col-4">
+      <img class="card-img-top" src="{{'http://localhost:3000/'+product.mainImg}}" alt="">
+      <div class="card-body">
+        <p class="card-text">Product name: {{product.name}}</p>
+        <p class="card-text">Product Description: {{product.desc}}</p>
+        <p class="card-text">Product price: {{product.price}}</p>
+  
+      </div>
+      <div class="card-footer">
+        <!-- <button type="button" (click)="edit(product._id)" class="btn btn-warning">Edit</button>
+        <button type="button" (click)="delete(product._id)" class="btn btn-danger">Delete</button> -->
+      </div>
+    </div>
+  </div>

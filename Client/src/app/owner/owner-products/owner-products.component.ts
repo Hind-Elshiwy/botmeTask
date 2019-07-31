@@ -3,11 +3,11 @@ import { ProductService } from 'src/app/sharedServices/product.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-owner-playgrounds',
-  templateUrl: './owner-playgrounds.component.html',
-  styleUrls: ['./owner-playgrounds.component.css']
+  selector: 'app-owner-products',
+  templateUrl: './owner-products.component.html',
+  styleUrls: ['./owner-products.component.css']
 })
-export class OwnerPlaygroundsComponent implements OnInit {
+export class OwnerProductsComponent implements OnInit {
 
   serverError;
   ProductList = [];

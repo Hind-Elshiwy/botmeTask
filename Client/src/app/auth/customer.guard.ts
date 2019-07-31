@@ -6,7 +6,7 @@ import { UserService } from '../user/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PlayerGuard implements CanActivate {
+export class CustomerGuard implements CanActivate {
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -14,7 +14,7 @@ export class PlayerGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     let payload = this.userService.getUserPayload();
-    if (payload.role !== "player") {
+    if (payload.role !== "customer") {
       this.router.navigateByUrl('/invalid');
       return false;
     }

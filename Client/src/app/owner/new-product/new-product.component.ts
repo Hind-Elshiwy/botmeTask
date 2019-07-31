@@ -6,11 +6,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-new-playground',
-  templateUrl: './new-playground.component.html',
-  styleUrls: ['./new-playground.component.css']
+  selector: 'app-new-product',
+  templateUrl: './new-product.component.html',
+  styleUrls: ['./new-product.component.css']
 })
-export class NewPlaygroundComponent implements OnInit {
+export class NewProductComponent implements OnInit {
 
   cities = environment.cities;
   image;

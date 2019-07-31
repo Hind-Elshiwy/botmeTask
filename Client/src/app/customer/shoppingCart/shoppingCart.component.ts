@@ -3,11 +3,11 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  selector: 'app-shoppingCart',
+  templateUrl: './shoppingCart.component.html',
+  styleUrls: ['./shoppingCart.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) { }
   error;

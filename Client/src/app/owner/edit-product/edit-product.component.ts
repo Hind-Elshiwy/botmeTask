@@ -5,11 +5,11 @@ import { Product } from 'src/app/sharedServices/product';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-edit-playground',
-  templateUrl: './edit-playground.component.html',
-  styleUrls: ['./edit-playground.component.css']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.css']
 })
-export class EditPlaygroundComponent implements OnInit {
+export class EditProductComponent implements OnInit {
 
   constructor(private productService: ProductService, private router: Router, private activeRoute: ActivatedRoute) { }
 
