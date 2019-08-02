@@ -17,19 +17,19 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(user: User) {
-    return this.http.post(environment.apiBaseUrl + '/user/signup', user, this.noAuthHeader);
+    return this.http.post(environment.apiBaseUrl + '/api/user/signup', user, this.noAuthHeader);
   }
 
   login(user) {
-    return this.http.post(environment.apiBaseUrl + '/user/signin', user, this.noAuthHeader);
+    return this.http.post(environment.apiBaseUrl + '/api/user/signin', user, this.noAuthHeader);
   }
 
   getUser() {
-    return this.http.get(environment.apiBaseUrl + '/user');
+    return this.http.get(environment.apiBaseUrl + '/api/user');
   }
 
   editUser(user: any) {
-    return this.http.put(environment.apiBaseUrl + '/user', user);
+    return this.http.put(environment.apiBaseUrl + '/api/user', user);
   }
 
 

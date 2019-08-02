@@ -14,10 +14,11 @@ export class EditProductComponent implements OnInit {
   constructor(private productService: ProductService, private router: Router, private activeRoute: ActivatedRoute) { }
 
   image;
-  newPlayground: Product = {
+  newProduct: Product = {
     name: '',
     mainImg: '',
     price: null,
+    quantity:null,
     desc: '',
   };
   serverError;
@@ -25,7 +26,7 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     this.id = this.activeRoute.snapshot.params['id'];
     this.productService.details(this.id).subscribe(result => {
-      this.newPlayground = <any>result;
+      this.newProduct = <any>result;
     })
   }
 

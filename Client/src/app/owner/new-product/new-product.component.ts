@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 export class NewProductComponent implements OnInit {
 
   image;
-  newPlayground: Product = {
+  newProduct: Product = {
     name: '',
     mainImg: '',
     price: null,
+    quantity:null,
     desc: '',
   };
   serverError;

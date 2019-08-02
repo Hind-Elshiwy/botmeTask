@@ -10,7 +10,7 @@
       <label for="playground">Product Name</label>
       <input type="text" #name="ngModel" name="name" id="playground" class="form-control" placeholder="Product Name"
         required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !name.valid }"
-        [(ngModel)]="newPlayground.name">
+        [(ngModel)]="newProduct.name">
       <div *ngIf="playgroundForm.submitted && !name.valid">
         <label class="text-danger">Product name is required.</label>
       </div>
@@ -21,7 +21,7 @@
       <label for="desc">Description</label>
       <input type="text" #desc="ngModel" name="desc" id="desc" class="form-control" placeholder="Description"
         required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !desc.valid }"
-        [(ngModel)]="newPlayground.desc">
+        [(ngModel)]="newProduct.desc">
       <div *ngIf="playgroundForm.submitted && !desc.valid">
         <label class="text-danger">Description is required.</label>
       </div>
@@ -31,9 +31,19 @@
       <label for="price">Price</label>
       <input type="number" min="1" #price="ngModel" name="price" id="price" class="form-control" placeholder="Price"
         required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !price.valid }"
-        [(ngModel)]="newPlayground.price">
+        [(ngModel)]="newProduct.price">
       <div *ngIf="playgroundForm.submitted && !price.valid">
         <label class="text-danger">Price is required.</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">quantity</label>
+      <input type="number" min="1" #quantity="ngModel" name="quantity" id="quantity" class="form-control" placeholder="quantity"
+        required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !price.valid }"
+        [(ngModel)]="newProduct.quantity">
+      <div *ngIf="playgroundForm.submitted && !quantity.valid">
+        <label class="text-danger">quantity is required.</label>
       </div>
     </div>
 
@@ -51,5 +61,5 @@
     <input type="submit" class="btn btn-success" value="Save">
   </form>
 
-
+  
 </div>

@@ -14,27 +14,27 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   add(product) {
-    return this.http.post(environment.apiBaseUrl + '/product', product);
+    return this.http.post(environment.apiBaseUrl + '/api/product', product);
   };
 
   edit(product, id) {
-    return this.http.put(environment.apiBaseUrl + '/product/' + id, product);
+    return this.http.put(environment.apiBaseUrl + '/api/product/' + id, product);
   };
 
   delete(id) {
-    return this.http.delete(environment.apiBaseUrl + '/product/' + id);
+    return this.http.delete(environment.apiBaseUrl + '/api/product/' + id);
   };
 
   getOwner() {
-    return this.http.get(environment.apiBaseUrl + '/product/owner');
+    return this.http.get(environment.apiBaseUrl + '/api/product/owner');
   };
 
   getAll() {
-    return this.http.get(environment.apiBaseUrl + '/shop');
+    return this.http.get(environment.apiBaseUrl + '/api/shop');
   }
 
   details(id) {
-    return this.http.get(environment.apiBaseUrl + '/product/' + id);
+    return this.http.get(environment.apiBaseUrl + '/api/product/' + id);
   }
 
   

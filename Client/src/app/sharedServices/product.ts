@@ -4,6 +4,7 @@ export class Product {
     mainImg: any;
     price: number;
     desc: string;
+    quantity:number;
 }
 
 
