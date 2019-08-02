@@ -21,7 +21,7 @@ exports.add = (req, res, next) => {
         });
         console.log(indexFound)
         if (indexFound !== -1 && quantity <= 0) {
-          cart.items.splice(indexFound, 1);
+        throw new Error('Invalid request');          
         } else if (indexFound !== -1) {
           cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
         } else if (quantity > 0) {
@@ -113,6 +113,9 @@ exports.empty = (req, res, next) => {
       return next(err);
     });
 }
+
+
+
 exports.get = function (req, res, next) {
   customer_id = req._id;
   Cart.get({ customer_id })
