@@ -1,4 +1,5 @@
 import { Product } from './product';
+import{Item} from './items';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -8,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductService {
 
+  private products: Product[];
   myProduct: Product;
   constructor(private http: HttpClient) { }
 
@@ -35,6 +37,7 @@ export class ProductService {
     return this.http.get(environment.apiBaseUrl + '/product/' + id);
   }
 
+  
   // helper
   reset() {
     this.myProduct = null;
