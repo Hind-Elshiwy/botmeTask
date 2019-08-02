@@ -3,7 +3,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 let itemSchema = new mongoose.Schema({
     product: {
-      type: ObjectId, ref: "Product", required: "The item must be be A product"},
+      type: ObjectId, ref: "Product", required: "The item must be A product"},
     quantity: {
       type: Number, required: "Quantity Is Required", min: [1, 'Quantity can not be less then 1.']}
   });
