@@ -1,5 +1,4 @@
 import { Product } from './product';
-import{Item} from './items';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -30,7 +29,7 @@ export class ProductService {
   };
 
   getAll() {
-    return this.http.get(environment.apiBaseUrl + '/api/shop');
+    return this.http.get(environment.apiBaseUrl + '/api/product');
   }
 
   details(id) {

@@ -1,30 +1,6 @@
-let multer = require("multer");
 let productSchema = require("../Models/product.model");
 
-
-// multer
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg')
-        cb(null, true);
-    else
-        cb(new Error("Not supported image type"), false);
-};
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname)
-    }
-});
-const upload = multer(
-    { storage: storage, fileFilter: fileFilter }
-);
-// ===============================================================
-
-
-
-exports.get =  upload.single("mainImg"), (req, res, next) => {
+exports.add = (req, res, next) => {
     console.log(req.body);
     console.log(req.file);
     req.body.mainImg = req.file.path;
@@ -42,10 +18,7 @@ exports.get =  upload.single("mainImg"), (req, res, next) => {
 }
 
 
-
-
-
-exports.update = upload.single("mainImg"), (req, res, next) => {
+exports.update = (req, res, next) => {
     if (req.file) {
         req.body.mainImg = req.file.path;
     }

@@ -49,7 +49,7 @@ server.use((err, req, res, next) => {
         res.status(422).send(valErrors)
     }
     else
-        res.status(422).send(err)
+        res.status(404).json(err)
 });
 
 server.listen(port, () => {

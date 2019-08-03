@@ -45,11 +45,11 @@ export class NewProductComponent implements OnInit {
     console.log(fd);
     this.productService.add(fd).subscribe(
       res => {
-        this.router.navigateByUrl('/owner/playground');
+        this.router.navigateByUrl('/owner/products');
       },
       err => {
         if (err.status === 422) {
-          console.log(err)
+          console.log("Bad" + err)
           //this.serverError = err.error.join('<br/>');
         }
         else

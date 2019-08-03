@@ -18,7 +18,11 @@ let cartSchema = new mongoose.Schema({
 cartSchema.statics = {
     get ({ customer_id } = {}) {
       let condition = { customer: customer_id };
-      return this.findOne(condition).exec();
+      return this.findOne(condition)
+      .populate({
+        path: 'items.product'
+      })
+      .exec();
     }
 };
 module.exports = mongoose.model('Cart', cartSchema);

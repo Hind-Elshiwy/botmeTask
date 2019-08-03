@@ -18,10 +18,8 @@
   
       </div>
       <div class="card-footer">
-        <a class="add-to-cart" href="/add-to-cart/{{this._id}}">Add to cart</a>
-        <a class="add-to-cart" href="/add-to-cart/{{this._id}}">wishlist cart</a>
-
-
+          <button type="button" (click)="addToCart(product)" class="add-to-cart">Add to Cart</button>
+          <button type="button" (click)="wishList(product)" class="add-to-cart">Add To My WishList</button>
       </div>
     </div>
   </div>
