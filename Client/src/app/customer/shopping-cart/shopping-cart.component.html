@@ -1,3 +1,38 @@
-<p style="color: aliceblue">
-  shopping-cart works!
-</p>
+<div class="wrap cf">
+    <h1 class="projTitle">Shopping Cart</h1>
+    <div class="heading cf">
+      <h1>My Cart</h1>
+    </div>
+    <div class="cart">
+      <ul class="cartWrap">
+        <li class="items even" *ngFor="let item of myCart?.items">
+          
+         <div class="infoWrap"> 
+          <div class="cartSection">
+           
+          <img src="{{'http://localhost:3000/'+item.product.mainImg}}" alt="" class="itemImg" />
+            <p class="itemNumber">#QUE-007544-002</p>
+            <h3>{{ item.product.name }}</h3>
+          
+             <p> <input type="text"  class="qty" placeholder="" value="{{ item.quantity }}"/> x ${{ item.product.price }}</p>
+          </div>  
+      
+          
+          <div class="prodTotal cartSection">
+            <p>${{item.product.price * item.quantity }}</p>
+          </div>
+                <div class="cartSection removeWrap">
+             <a href="#" class="remove">x</a>
+          </div>
+        </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="subtotal cf">
+      <ul>
+              <li class="totalRow final"><span class="label">Total</span><span class="value">{{ myCart?.totalPrice }}</span></li>
+        <li class="totalRow"><a href="#" class="btn continue">Checkout</a></li>
+      </ul>
+    </div>
+  </div>

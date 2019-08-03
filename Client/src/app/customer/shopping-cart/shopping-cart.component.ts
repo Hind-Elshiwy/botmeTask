@@ -9,13 +9,12 @@ import { Cart } from 'src/app/sharedServices/cart';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  private mycart : Cart
+  private myCart : Cart
   constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit() {
     this.cartService.get().subscribe(res => {
-      this.mycart = <any>res
-      console.log(this.mycart)
+      this.myCart = <any>res
     },
     err => {
       console.log(err)
