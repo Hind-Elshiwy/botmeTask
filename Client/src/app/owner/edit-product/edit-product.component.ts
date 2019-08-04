@@ -47,7 +47,7 @@ export class EditProductComponent implements OnInit {
 
     this.productService.edit(fd, this.id).subscribe(
       res => {
-        this.router.navigateByUrl('/owner/playground');
+        this.router.navigateByUrl('/owner/products');
       },
       err => {
         if (err.status === 422) {

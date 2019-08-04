@@ -38,6 +38,16 @@
     </div>
 
     <div class="form-group">
+      <label for="price">quantity</label>
+      <input type="number" min="1" #quantity="ngModel" name="quantity" id="quantity" class="form-control" placeholder="quantity"
+        required [ngClass]="{'invalid-textbox':playgroundForm.submitted && !price.valid }"
+        [(ngModel)]="newProduct.quantity">
+      <div *ngIf="playgroundForm.submitted && !quantity.valid">
+        <label class="text-danger">quantity is required.</label>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label for="photo">Product Image</label>
       <input #imageInput name="img" id="photo" class="form-control" type="file" accept="image/*"
         [ngClass]="{'invalid-textbox':playgroundForm.submitted && !imageInput.value }"

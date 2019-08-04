@@ -1,3 +1,35 @@
-<p style="color: aliceblue">
-  wishlist works!
-</p>
+<div class="wrap cf">
+  <h1 class="projTitle">Shopping Cart</h1>
+  <div class="heading cf">
+    <h1>My wishlistCart</h1>
+  </div>
+  <div class="cart">
+    <ul class="cartWrap">
+      <li class="items even" *ngFor="let item of myCart?.items">
+        
+       <div class="infoWrap"> 
+        <div class="cartSection">
+         
+        <img src="{{'http://localhost:3000/'+item.product.mainImg}}" alt="" class="itemImg" />
+          <p class="itemNumber">#QUE-007544-002</p>
+          <h3>{{ item.product.name }}</h3>
+        
+           <p> <input type="text"  class="qty" placeholder="" value="{{ item.quantity }}"/> x ${{ item.product.price }}</p>
+        </div>  
+    
+        
+        
+              <div class="cartSection removeWrap">
+           <a (click)="remove(item.product)" class="remove">x</a>
+        </div>
+      </div>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="subtotal cf">
+    <ul>
+      <li class="totalRow"><a href="javascript:void" (click)="empty()" class="btn continue">Empty</a></li>
+    </ul>
+  </div>
+</div>

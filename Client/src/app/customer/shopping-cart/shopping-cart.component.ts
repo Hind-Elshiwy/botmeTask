@@ -21,4 +21,32 @@ export class ShoppingCartComponent implements OnInit {
     })
   }
 
+  subtract(product){
+    let Prod = {
+      product_id : product._id,
+      quantity:1
+    }
+    this.cartService.subtract(Prod).subscribe(
+      res => {
+        this.myCart = <any>res
+      },
+      err => {
+        console.log(err)
+      }
+    )
+ }
+
+
+
+ empty(){
+  this.cartService.empty().subscribe(
+    res => {
+      this.myCart = <any>res
+    },
+    err => {
+      console.log(err)
+    }
+  )
+ }
+
 }

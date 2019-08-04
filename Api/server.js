@@ -7,7 +7,8 @@ const express = require("express"),
     mongoose = require("mongoose"),
     userRoutes = require("./Routes/userRoutes"),
     productRoutes = require("./Routes/productRoutes"),
-    cartRoutes = require("./Routes/cartRoutes");
+    cartRoutes = require("./Routes/cartRoutes"),
+    wishlistRoutes=require("./Routes/wishlistRoutes");
 
 
 // const authenticate = require("./middleware/jwt");
@@ -40,6 +41,8 @@ server.get('/', (req, res) => {
 });
 server.use("/api/product", productRoutes);
 server.use("/api/cart", cartRoutes);
+server.use("/api/wishlistcart", wishlistRoutes);
+
 
 server.use((err, req, res, next) => {
     console.log(err);

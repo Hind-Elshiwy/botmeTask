@@ -20,6 +20,7 @@ export class CustomerProfileComponent implements OnInit {
   image;
   uneditable = true;
   ngOnInit() {
+    document.body.className="customer-profile";
     this.userService.getUser().subscribe(
       res => {
         this.userDetails = res;

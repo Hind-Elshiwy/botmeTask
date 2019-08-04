@@ -1,8 +1,11 @@
+<div class="alert alert-danger" *ngIf="serverError">
+  {{serverError}}
+</div>
+<div class="alert alert-success" *ngIf="successMsg">
+  {{successMsg}}
+</div>
 
 
-  <div *ngIf="serverError" class="alert alert-danger" role="alert">
-      <strong>{{serverError}}</strong>
-    </div>
 <div *ngIf="ProductList.length==0" class="alert alert-info text-center" role="alert">
     <strong>No Products Added</strong>
   </div>
@@ -17,9 +20,12 @@
         <p class="card-text">Product price: {{product.price}}</p>
   
       </div>
+  
       <div class="card-footer">
           <button type="button" (click)="addToCart(product)" class="add-to-cart">Add to Cart</button>
           <button type="button" (click)="wishList(product)" class="add-to-cart">Add To My WishList</button>
       </div>
     </div>
   </div>
+
+  

@@ -1,9 +1,6 @@
-<script src="/src/assets/js/loginImg.js"></script>
 
 <form #signUpForm="ngForm" (ngSubmit)="signUpForm.valid && onSubmit(signUpForm)">
-  <div class="image">
-    <div class="spriteAnimation"></div>
-  </div>
+ 
 
   <input type="text" #name="ngModel" [(ngModel)]="userService.user.name" name="name" placeholder="Full Name" required
     [ngClass]="{'invalid-textbox' :signUpForm.submitted && !name.valid }">

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+options = { discriminatorKey: 'kind' };
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 let itemSchema = new mongoose.Schema({
@@ -10,14 +11,13 @@ let itemSchema = new mongoose.Schema({
 let cartSchema = new mongoose.Schema({
     customer: { type: ObjectId, ref: "User", required: "There must be Customer for this Product" },
     items: [itemSchema],
-    totalPrice: { type: Number }
 
-});
+}, options);
 
 //statics works on all the model , takes customer id and returns the cart 
 cartSchema.statics = {
-    get ({ customer_id } = {}) {
-      let condition = { customer: customer_id };
+    get ({ customer_id, kind } = {}) {
+      let condition = { customer: customer_id, kind: kind };
       return this.findOne(condition)
       .populate({
         path: 'items.product'

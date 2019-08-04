@@ -1,11 +1,12 @@
-const Cart = require('../Models/cart.model');
+const Cart = require('../Models/shoppingcart.model');
 let productSchema = require("../Models/product.model");
 exports.add = (req, res, next) => {
   const { product_id } = req.body;
   const quantity = Number.parseInt(req.body.quantity);
   customer_id = req._id;
+  kind = "shoppingcart"
   price = Number.parseInt(req.body.price);
-  Cart.get({customer_id})
+  Cart.get({customer_id, kind})
   .then(cart => {
     console.log(cart)
       if (!cart && quantity <= 0) {
@@ -61,9 +62,10 @@ exports.subtract = (req, res, next) => {
   const { product_id } = req.body;
   const quantity = Number.parseInt(req.body.quantity);
   customer_id = req._id;
+  kind = "shoppingcart"
   //const price = Number.parseInt(req.body.price);
   console.log('qty: ', quantity);
-  Cart.get({customer_id})
+  Cart.get({customer_id,kind})
   .then(cart => {
       if (!cart && quantity <= 0) {
         throw new Error('Invalid request');
@@ -99,7 +101,8 @@ exports.subtract = (req, res, next) => {
 
 exports.empty = (req, res, next) => {
   customer_id = req._id;
-  Cart.get({ customer_id })
+  kind = "shoppingcart"
+  Cart.get({ customer_id ,kind})
     .then(cart => {
       if(cart){
         cart.items = [];
@@ -119,7 +122,8 @@ exports.empty = (req, res, next) => {
 
 exports.get = function (req, res, next) {
   customer_id = req._id;
-  Cart.get({ customer_id })
+  kind = "shoppingcart"
+  Cart.get({ customer_id ,kind})
     .then(Cart => {
       if(Cart) 
         res.status(200).send(Cart)
@@ -135,7 +139,8 @@ exports.get = function (req, res, next) {
 //Remove customer cart
 exports.remove = (req, res, next) => {
   customer_id = req._id
-  Cart.get({ customer_id })
+  kind = "shoppingcart"
+  Cart.get({ customer_id ,kind})
     .then(Cart => Cart.remove())
     .then(deletedCart => res.json(deletedCart))
     .catch(err => {

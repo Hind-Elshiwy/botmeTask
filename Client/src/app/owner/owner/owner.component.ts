@@ -12,6 +12,7 @@ export class OwnerComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
   error;
   ngOnInit() {
+    document.body.className="owner-profile";
     this.userService.getUser().subscribe(
       res => {
         this.userService.user = <any>res;

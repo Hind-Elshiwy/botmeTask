@@ -22,7 +22,7 @@
             <p>${{item.product.price * item.quantity }}</p>
           </div>
                 <div class="cartSection removeWrap">
-             <a href="#" class="remove">x</a>
+             <a (click)="subtract(item.product)" class="remove">x</a>
           </div>
         </div>
         </li>
@@ -32,7 +32,7 @@
     <div class="subtotal cf">
       <ul>
               <li class="totalRow final"><span class="label">Total</span><span class="value">{{ myCart?.totalPrice }}</span></li>
-        <li class="totalRow"><a href="#" class="btn continue">Checkout</a></li>
+        <li class="totalRow"><a  href="javascript:void" (click)="empty()" class="btn continue">Empty</a></li>
       </ul>
     </div>
   </div>
