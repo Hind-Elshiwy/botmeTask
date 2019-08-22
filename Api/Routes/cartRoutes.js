@@ -8,4 +8,5 @@ cartRoutes.get('', CartController.get);
 cartRoutes.post('/add', CartController.add);
 cartRoutes.post('/subtract', CartController.subtract);
 cartRoutes.post('/empty', CartController.empty);
+cartRoutes.get('/numberOfProdCart', CartController.numberOfProdCart);
 module.exports = cartRoutes;

@@ -4,6 +4,9 @@ import { ProductService } from 'src/app/sharedServices/product.service';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/sharedServices/cart.service';
 import { wishlistService } from 'src/app/sharedServices/wishlist.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.module';
+import { AddNumber } from 'src/app/store/actions/appActions';
 
 @Component({
   selector: 'app-brand',
@@ -11,11 +14,13 @@ import { wishlistService } from 'src/app/sharedServices/wishlist.service';
   styleUrls: ['./brand.component.css']
 })
 export class BrandPlaygroundsComponent implements OnInit {
-  
+ 
   serverError;
   ProductList = [];
   successMsg;
-  constructor(private productService: ProductService,private cartService: CartService,private wishlistservice:wishlistService, private router: Router) { }
+  productsNumber;
+
+  constructor(private productService: ProductService,private cartService: CartService,private wishlistservice:wishlistService, private router: Router , private store: Store<AppState> ) { }
 
   list() {
     this.productService.getAll().subscribe((list) => {
@@ -37,8 +42,12 @@ export class BrandPlaygroundsComponent implements OnInit {
       quantity : 1 //Make it 1 now 
     }
     this.cartService.addToCart(newProd).subscribe(res => {
+      console.log(res)
       this.successMsg = "Product Was Successfully Added";
       console.log("Product Was Successfully Added")
+      if(res==1){
+        this.store.dispatch(new AddNumber())
+      }
     },
     err => {
       console.log(err)
@@ -63,6 +72,10 @@ export class BrandPlaygroundsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.select('Number').subscribe(res => {
+      console.log(res)
+    })
+    //this.store.dispatch(new AddNumber({}))
     this.list();
   }
 

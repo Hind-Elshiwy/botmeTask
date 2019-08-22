@@ -23,6 +23,36 @@ import { EditProductComponent } from './owner/edit-product/edit-product.componen
 import { BrandPlaygroundsComponent } from './customer/brand/brand.component';
 import { ShoppingCartComponent } from './customer/shopping-cart/shopping-cart.component';
 import { WishlistComponent } from './customer/wishlist/wishlist.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer, NumberState } from './store/reducers/appReducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { ActionReducerMap } from '@ngrx/store'
+
+export interface AppState{
+  Number : NumberState
+}
+
+export const reducers: ActionReducerMap<AppState>={
+  Number: reducer
+}
+
+
+
+
+
+// import { from } from 'rxjs';
+
+
+
+
+// export const reducers : ActionReducerMap<AppState> = {
+// appReducer : reducer
+// } 
+
+
+
+
 
 
 @NgModule({
@@ -49,6 +79,8 @@ import { WishlistComponent } from './customer/wishlist/wishlist.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    StoreModule.forRoot(reducers ,{} ),
+    StoreDevtoolsModule.instrument()
     // FullCalendarModule // for FullCalendar!
   ],
   providers: [{

@@ -26,4 +26,9 @@ export class CartService {
     return this.http.get(environment.apiBaseUrl + '/api/cart');
   };
 
+  getProdNumbINCart(){
+    return this.http.get(environment.apiBaseUrl + '/api/cart/numberOfProdCart');
+
+  }
+
 }

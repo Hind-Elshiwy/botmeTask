@@ -1,10 +1,12 @@
 const Cart = require('../Models/shoppingcart.model');
 let productSchema = require("../Models/product.model");
+
 exports.add = (req, res, next) => {
   const { product_id } = req.body;
   const quantity = Number.parseInt(req.body.quantity);
   customer_id = req._id;
   kind = "shoppingcart"
+  newItem = 0;
   price = Number.parseInt(req.body.price);
   Cart.get({customer_id, kind})
   .then(cart => {
@@ -27,8 +29,9 @@ exports.add = (req, res, next) => {
           //Item is not in the cart
           cart.items.push({
             product: product_id,
-            quantity: quantity
+            quantity: quantity,
           });
+          newItem = 1
           cart.totalPrice += (price * quantity)
         } else {
           throw new Error('Invalid request');
@@ -46,10 +49,11 @@ exports.add = (req, res, next) => {
           totalPrice: price
         };
         cart = new Cart(cartData);
+        newItem = 1;
         return cart.save();
       }
     })
-    .then(savedCart => res.json(savedCart))
+    .then(savedCart => res.json(newItem))
     .catch(err => {
       return next(err.message);
     });
@@ -63,6 +67,7 @@ exports.subtract = (req, res, next) => {
   const quantity = Number.parseInt(req.body.quantity);
   customer_id = req._id;
   kind = "shoppingcart"
+  removedItem = 0;
   //const price = Number.parseInt(req.body.price);
   console.log('qty: ', quantity);
   Cart.get({customer_id,kind})
@@ -147,3 +152,22 @@ exports.remove = (req, res, next) => {
       return next(error);
     });
 };
+
+
+exports.numberOfProdCart= (req, res, next) => {
+  customer_id = req._id;
+  kind = "shoppingcart"
+  Cart.get({ customer_id ,kind})
+    .then(Cart => {
+      if(Cart) {
+        //console.log(Cart.items.length + "4444hhhhhhhhhhhhhhhh")
+        res.status(200).json(Cart.items.length)
+      }
+      else
+        res.status(404).json({message:"No Cart Found", number:0})  
+    })
+    .catch(err => {    
+      return next(err);
+    });
+
+}

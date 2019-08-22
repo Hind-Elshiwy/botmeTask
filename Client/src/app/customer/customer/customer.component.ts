@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
+// import { stat } from 'fs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.module';
+import { from } from 'rxjs';
+import { AddNumber } from 'src/app/store/actions/appActions';
 
 @Component({
   selector: 'app-customer',
@@ -8,10 +13,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
-
-  constructor(private userService: UserService, private router: Router) { }
+  BrandsInCart;
+  constructor(private userService: UserService, private router: Router, private store: Store<AppState>) { }
   error;
+  state;
+
+getingState(){
+// this.userService.getAllState().subscribe(
+//   state=>{ this.BrandsInCart=state}
+// )
+
+
+
+
+
+}
+
   ngOnInit() {
+    this.store.select('Number').subscribe(res => {
+      this.BrandsInCart=res.Number
+      // console.log(res)
+    })
+
+
+    //this.store.dispatch(new AddNumber({}))
+    // this.store.select('reducer').map((data: AppState) => this.state = data );
     this.userService.getUser().subscribe(
       res => {
         this.userService.user = <any>res;
@@ -26,5 +52,6 @@ export class CustomerComponent implements OnInit {
     this.userService.deleteToken();
     this.router.navigate(['/login']);
   }
+
 
 }
