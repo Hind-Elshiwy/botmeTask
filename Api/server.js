@@ -75,10 +75,11 @@ function handlePostback(sender_psid, received_postback,kind) {
 shoppingCartModel.getWithPsid({ sender_psid ,kind})
   .then(Cart => {
     if(Cart){ 
+console.log(Cart+"lololololololo")
 
       const indexFound = Cart.items.findIndex(item => {
         console.log(item.product + "LaLALAALLALALALA")
-        return item.product._id == prod_id;
+        return item._id == prod_id;
       });
       if(indexFound !== -1){
         Cart.items[indexFound].quantity += 1;
@@ -98,6 +99,14 @@ shoppingCartModel.getWithPsid({ sender_psid ,kind})
          response = {
           "text": `${res.name} Was Added`
         }
+       
+       callSendAPI(sender_psid, response);
+      })
+      .catch(err=>{
+        response = {
+          "text": `Product is not Found`
+        }
+       
        callSendAPI(sender_psid, response);
       })
      } 
@@ -149,8 +158,8 @@ function callSendAPI(sender_psid, response) {
 const server = express();
 
 mongoose.connect(
-  "mongodb://localhost:27017/botme",
-  // "mongodb+srv://deb402595:hindhindhind@cluster0-wcpha.mongodb.net/test?retryWrites=true&w=majority",
+  // "mongodb://localhost:27017/botme",
+  "mongodb+srv://deb402595:hindhindhind@cluster0-wcpha.mongodb.net/test?retryWrites=true&w=majority",
   {
     useCreateIndex: true,
     useNewUrlParser: true
