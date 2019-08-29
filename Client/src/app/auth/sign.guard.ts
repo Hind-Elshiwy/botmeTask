@@ -15,8 +15,8 @@ export class SignGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
     let payload = this.userService.getUserPayload();
     if (this.userService.isLoggedIn()) {
-      if (payload.role === "owner") { this.router.navigateByUrl('/owner/profile'); }
-      else if (payload.role === "customer") { this.router.navigateByUrl('/customer/profile'); }
+      if (payload.role === "owner") { this.router.navigateByUrl('owners/owner/profile'); }
+      else if (payload.role === "customer") { this.router.navigateByUrl('customers/customer/profile'); }
       return false;
     }
     return true;

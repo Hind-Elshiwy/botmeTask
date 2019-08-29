@@ -9,8 +9,9 @@ let itemSchema = new mongoose.Schema({
       type: Number, required: "Quantity Is Required", min: [1, 'Quantity can not be less then 1.']}
   });
 let cartSchema = new mongoose.Schema({
-    customer: { type: ObjectId, ref: "User", required: "There must be Customer for this Product" },
+    customer: { type: ObjectId, ref: "User", default:null},
     items: [itemSchema],
+    psid: {type: String ,default:null}
 
 }, options);
 
@@ -18,6 +19,14 @@ let cartSchema = new mongoose.Schema({
 cartSchema.statics = {
     get ({ customer_id, kind } = {}) {
       let condition = { customer: customer_id, kind: kind };
+      return this.findOne(condition)
+      .populate({
+        path: 'items.product'
+      })
+      .exec();
+    },
+    getWithPsid ({ sender_psid, kind } = {}) {
+      let condition = { psid: sender_psid, kind: kind };
       return this.findOne(condition)
       .populate({
         path: 'items.product'

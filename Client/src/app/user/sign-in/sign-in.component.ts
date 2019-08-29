@@ -24,8 +24,8 @@ export class SignInComponent implements OnInit {
     this.userService.login(form.value).subscribe(
       res => {
         this.userService.setToken(res['token']);
-        if (form.value.role === "customer") this.router.navigateByUrl('/customer/profile');
-        else if (form.value.role === "owner") this.router.navigateByUrl('/owner/profile');
+        if (form.value.role === "customer") this.router.navigateByUrl('/customers/customer/profile');
+        else if (form.value.role === "owner") this.router.navigateByUrl('/owners/owner/profile');
       },
       err => {
         this.serverErrorMessages = err.error.message;

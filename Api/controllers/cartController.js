@@ -1,4 +1,5 @@
-const Cart = require('../Models/shoppingcart.model');
+const Cart = require('../Models/shoppingcart.model'),
+      cartService = require('../services/cart.service');
 let productSchema = require("../Models/product.model");
 
 exports.add = (req, res, next) => {
@@ -8,9 +9,9 @@ exports.add = (req, res, next) => {
   kind = "shoppingcart"
   newItem = 0;
   price = Number.parseInt(req.body.price);
-  Cart.get({customer_id, kind})
-  .then(cart => {
-    console.log(cart)
+  Cart.get({ customer_id, kind })
+    .then(cart => {
+      console.log(cart)
       if (!cart && quantity <= 0) {
         throw new Error('Invalid request');
       } else if (cart) {
@@ -19,7 +20,7 @@ exports.add = (req, res, next) => {
         });
         console.log(indexFound)
         if (indexFound !== -1 && quantity <= 0) {
-        throw new Error('Invalid request');          
+          throw new Error('Invalid request');
         } else if (indexFound !== -1) {
           // Item Exists In the Cart
           cart.items[indexFound].quantity += quantity;
@@ -48,6 +49,9 @@ exports.add = (req, res, next) => {
           ],
           totalPrice: price
         };
+        if (cartData.customer == "" || cartData.customer == null) {
+          return res.json({ msg: "Customer Id Is required" })
+        }
         cart = new Cart(cartData);
         newItem = 1;
         return cart.save();
@@ -70,8 +74,8 @@ exports.subtract = (req, res, next) => {
   removedItem = 0;
   //const price = Number.parseInt(req.body.price);
   console.log('qty: ', quantity);
-  Cart.get({customer_id,kind})
-  .then(cart => {
+  Cart.get({ customer_id, kind })
+    .then(cart => {
       if (!cart && quantity <= 0) {
         throw new Error('Invalid request');
       } else {
@@ -85,6 +89,7 @@ exports.subtract = (req, res, next) => {
           cart.totalPrice -= (cart.items[indexFound].product.price * quantity)
           if (updatedQty <= 0) {
             cart.items.splice(indexFound, 1);
+            removedItem = 1
           } else {
             cart.items[indexFound].quantity = updatedQty;
           }
@@ -96,7 +101,7 @@ exports.subtract = (req, res, next) => {
         }
       }
     })
-    .then(updatedCart => res.json(updatedCart))
+    .then(updatedCart => res.json({cart :updatedCart, removed: removedItem}))
     .catch(err => {
       return next(err.message);
     });
@@ -107,18 +112,18 @@ exports.subtract = (req, res, next) => {
 exports.empty = (req, res, next) => {
   customer_id = req._id;
   kind = "shoppingcart"
-  Cart.get({ customer_id ,kind})
+  Cart.get({ customer_id, kind })
     .then(cart => {
-      if(cart){
+      if (cart) {
         cart.items = [];
         cart.totalPrice = 0;
         return cart.save()
-      } 
+      }
       else
-        res.status(404).json({message:"No Cart Found"})  
+        res.status(404).json({ message: "No Cart Found" })
     })
     .then(emptyCart => res.json(emptyCart))
-    .catch(err => {    
+    .catch(err => {
       return next(err);
     });
 }
@@ -128,14 +133,14 @@ exports.empty = (req, res, next) => {
 exports.get = function (req, res, next) {
   customer_id = req._id;
   kind = "shoppingcart"
-  Cart.get({ customer_id ,kind})
+  Cart.get({ customer_id, kind })
     .then(Cart => {
-      if(Cart) 
+      if (Cart)
         res.status(200).send(Cart)
       else
-        res.status(404).json({message:"No Cart Found"})  
+        res.status(404).json({ message: "No Cart Found" })
     })
-    .catch(err => {    
+    .catch(err => {
       return next(err);
     });
 };
@@ -145,7 +150,7 @@ exports.get = function (req, res, next) {
 exports.remove = (req, res, next) => {
   customer_id = req._id
   kind = "shoppingcart"
-  Cart.get({ customer_id ,kind})
+  Cart.get({ customer_id, kind })
     .then(Cart => Cart.remove())
     .then(deletedCart => res.json(deletedCart))
     .catch(err => {
@@ -154,19 +159,19 @@ exports.remove = (req, res, next) => {
 };
 
 
-exports.numberOfProdCart= (req, res, next) => {
+exports.numberOfProdCart = (req, res, next) => {
   customer_id = req._id;
   kind = "shoppingcart"
-  Cart.get({ customer_id ,kind})
+  Cart.get({ customer_id, kind })
     .then(Cart => {
-      if(Cart) {
+      if (Cart) {
         //console.log(Cart.items.length + "4444hhhhhhhhhhhhhhhh")
         res.status(200).json(Cart.items.length)
       }
       else
-        res.status(404).json({message:"No Cart Found", number:0})  
+        res.status(404).json({ message: "No Cart Found", number: 0 })
     })
-    .catch(err => {    
+    .catch(err => {
       return next(err);
     });
 

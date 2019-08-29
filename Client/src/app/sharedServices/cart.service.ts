@@ -16,7 +16,7 @@ export class CartService {
   };
 
   subtract(product) {
-    return this.http.post(environment.apiBaseUrl + '/api/cart/subtract', product);
+    return this.http.post<any>(environment.apiBaseUrl + '/api/cart/subtract', product);
   };
 
   empty() {

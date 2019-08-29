@@ -33,7 +33,7 @@ export class OwnerProductsComponent implements OnInit {
   }
 
   edit(id) {
-    this.router.navigateByUrl('/owner/editproduct/' + id);
+    this.router.navigateByUrl('/owners/owner/editproduct/' + id);
   }
 
   ngOnInit() {

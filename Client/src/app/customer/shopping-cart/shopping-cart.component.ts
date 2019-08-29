@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/sharedServices/cart.service';
 import { Router } from '@angular/router';
 import { Cart } from 'src/app/sharedServices/cart';
+import { RemoveNumber } from 'src/app/store/actions/appActions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.module';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,7 +13,7 @@ import { Cart } from 'src/app/sharedServices/cart';
 })
 export class ShoppingCartComponent implements OnInit {
   private myCart : Cart
-  constructor(private cartService: CartService, private router: Router) { }
+  constructor(private cartService: CartService, private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {
     this.cartService.get().subscribe(res => {
@@ -28,7 +31,11 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.cartService.subtract(Prod).subscribe(
       res => {
-        this.myCart = <any>res
+        console.log(res)
+        this.myCart = <any>res.cart
+        if(res.removed==1){
+          this.store.dispatch(new RemoveNumber())
+        }
       },
       err => {
         console.log(err)
