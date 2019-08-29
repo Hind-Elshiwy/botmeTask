@@ -9,12 +9,12 @@ const express = require("express"),
   productRoutes = require("./Routes/productRoutes"),
   cartRoutes = require("./Routes/cartRoutes"),
   wishlistRoutes = require("./Routes/wishlistRoutes"),
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
+  // PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   shoppingCartModel = require('./Models/shoppingcart.model'),
   productSchema = require("./Models/product.model"),
   request = require('request'),
   fbTemplate = require('fb-message-builder');
-
+  PAGE_ACCESS_TOKEN="EAAiQLlHOQ7EBABZB6ZCgZBhGOdBZCCroExAvkBYcZAW7GCZAouTosvsmp287YqEoZBeQki1qfbEMBthDHsNF4C37a2EhAv4PzpQfE9ZATTRxVYiQpVPNL1i4FwrKLfFopRrfOkULsSuj7ODXsI1UkoYTBUaPBVgIhzMIXQ7vFCeySwZDZD"
 // console.log(PAGE_ACCESS_TOKEN)
 
 
@@ -158,8 +158,8 @@ function callSendAPI(sender_psid, response) {
 const server = express();
 
 mongoose.connect(
-  // "mongodb://localhost:27017/botme",
-  "mongodb+srv://deb402595:hindhindhind@cluster0-wcpha.mongodb.net/test?retryWrites=true&w=majority",
+  "mongodb://localhost:27017/botme",
+  // "mongodb+srv://deb402595:hindhindhind@cluster0-wcpha.mongodb.net/test?retryWrites=true&w=majority",
   {
     useCreateIndex: true,
     useNewUrlParser: true
