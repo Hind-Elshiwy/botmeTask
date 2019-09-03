@@ -11,6 +11,8 @@ export class OwnerProductsComponent implements OnInit {
 
   serverError;
   ProductList = [];
+  count=0;
+  show = true
   constructor(private productService: ProductService, private router: Router) { }
 
   list() {
@@ -22,6 +24,23 @@ export class OwnerProductsComponent implements OnInit {
       }
 
     );
+  }
+
+
+
+  lodemore(){
+    
+    this.productService.lodemore(this.count).subscribe(res=>{
+      this.ProductList = this.ProductList.concat(<any>res);
+      this.count=this.count+1
+      if(res.length < 5)
+        this.show = false
+      console.log(this.show)
+    },
+      err => {
+        this.serverError = err;
+      
+    })
   }
 
   delete(id) {
@@ -37,7 +56,9 @@ export class OwnerProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.list();
+    // this.list();
+    this.lodemore();
+
   }
 
 }

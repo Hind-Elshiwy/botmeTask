@@ -42,4 +42,9 @@ export class ProductService {
     this.myProduct = null;
   }
 
+
+  lodemore(count){
+    return this.http.get<any[]>(environment.apiBaseUrl + '/api/product/paginat?load='+count);
+  }
+
 }

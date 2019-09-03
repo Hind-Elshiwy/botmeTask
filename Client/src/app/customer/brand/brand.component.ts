@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/sharedServices/product.service';
 // import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { Router ,ActivatedRoute} from '@angular/router';
 import { CartService } from 'src/app/sharedServices/cart.service';
 import { wishlistService } from 'src/app/sharedServices/wishlist.service';
 import { Store } from '@ngrx/store';
@@ -19,19 +19,21 @@ export class BrandPlaygroundsComponent implements OnInit {
   ProductList = [];
   successMsg;
   productsNumber;
+  count=0;
+  show = true
+  constructor(private productService: ProductService,private cartService: CartService,private wishlistservice:wishlistService, private router: Router , private route: ActivatedRoute, private store: Store<AppState> ) { }
 
-  constructor(private productService: ProductService,private cartService: CartService,private wishlistservice:wishlistService, private router: Router , private store: Store<AppState> ) { }
 
-  list() {
-    this.productService.getAll().subscribe((list) => {
-      this.ProductList = <any>list;
-    },
-      err => {
-        this.serverError = err;
-      }
+  // list() {
+  //   this.productService.getAll().subscribe((list) => {
+  //     this.ProductList = <any>list;
+  //   },
+  //     err => {
+  //       this.serverError = err;
+  //     }
 
-    );
-  }
+  //   );
+  // }
 
   addToCart(product) {
     this.serverError=""
@@ -71,12 +73,33 @@ export class BrandPlaygroundsComponent implements OnInit {
     })
   }
 
+  lodemore(){
+    
+    this.productService.lodemore(this.count).subscribe(res=>{
+      this.ProductList = this.ProductList.concat(<any>res);
+      this.count=this.count+1
+      if(res.length < 5)
+        this.show = false
+      console.log(this.show)
+    },
+      err => {
+        this.serverError = err;
+      
+    })
+  }
+
+ 
+
   ngOnInit() {
     this.store.select('Number').subscribe(res => {
       console.log(res)
-    })
+    }
+    )
     //this.store.dispatch(new AddNumber({}))
-    this.list();
+    // this.list();
+    this.lodemore();
+    // console.log(this.route.snapshot.queryParamMap)
+    // console.log("himaaaaaaaaaaaaaaaaaa");
   }
 
 }

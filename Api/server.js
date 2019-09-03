@@ -1,4 +1,4 @@
-// const port = 3000;
+const port = 3000;
 const express = require("express"),
   path = require("path"),
   cors = require("cors"),
@@ -310,14 +310,14 @@ server.use((err, req, res, next) => {
 });
 
 // Send all requests to index.html
-server.get('/*', (req, res)=> {
-  res.sendFile(path.join(__dirname + '/dist/client/index.html'));
-});
-
-server.listen(process.env.PORT || 3000, function(){
-  console.log('Your node js server is running');
-});
-
-// server.listen(port, () => {
-//   console.log(`I am Listening on port ${port}`);
+// server.get('/*', (req, res)=> {
+//   res.sendFile(path.join(__dirname + '/dist/client/index.html'));
 // });
+
+// server.listen(process.env.PORT || 3000, function(){
+//   console.log('Your node js server is running');
+// });
+
+server.listen(port, () => {
+  console.log(`I am Listening on port ${port}`);
+});

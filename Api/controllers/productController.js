@@ -98,3 +98,20 @@ exports.delete =(req, res, next) => {
         }
     });
 }
+
+
+
+exports.paginat=(req, res, next) => {
+    let limit = 5
+    loadCount = parseInt(req.query.load)
+    // console.log(loadCount)
+    productSchema.find({}, (err, result) => {
+        if (err) {
+            return next(err);
+        }
+        else {
+            res.status(200).send(result);
+        }
+    }).sort({name: 1}).skip(limit * loadCount).limit(limit);
+   
+}
