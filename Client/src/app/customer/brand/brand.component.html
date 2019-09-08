@@ -13,7 +13,7 @@
 
   <div class="row">
     <div *ngFor="let product of ProductList" class="card col-4">
-      <img class="card-img-top" src="{{'http://localhost:3000/'+product.mainImg}}" alt="">
+      <img class="card-img-top" src="{{ weburl + '/' + product.mainImg }}" alt="">
       <div class="card-body">
         <p class="card-text">Product name: {{product.name}}</p>
         <p class="card-text">Product Description: {{product.desc}}</p>

@@ -5,6 +5,8 @@ import { Cart } from 'src/app/sharedServices/cart';
 import { RemoveNumber } from 'src/app/store/actions/appActions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.module';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,6 +15,8 @@ import { AppState } from 'src/app/app.module';
 })
 export class ShoppingCartComponent implements OnInit {
   private myCart : Cart
+  weburl = environment.apiBaseUrl
+
   constructor(private cartService: CartService, private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {

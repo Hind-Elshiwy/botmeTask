@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/sharedServices/product.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-owner-products',
@@ -13,6 +14,7 @@ export class OwnerProductsComponent implements OnInit {
   ProductList = [];
   count=0;
   show = true
+  weburl = environment.apiBaseUrl
   constructor(private productService: ProductService, private router: Router) { }
 
   list() {

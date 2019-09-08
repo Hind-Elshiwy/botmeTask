@@ -7,6 +7,7 @@ import { wishlistService } from 'src/app/sharedServices/wishlist.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.module';
 import { AddNumber } from 'src/app/store/actions/appActions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-brand',
@@ -21,6 +22,8 @@ export class BrandPlaygroundsComponent implements OnInit {
   productsNumber;
   count=0;
   show = true
+  weburl = environment.apiBaseUrl
+
   constructor(private productService: ProductService,private cartService: CartService,private wishlistservice:wishlistService, private router: Router , private route: ActivatedRoute, private store: Store<AppState> ) { }
 
 

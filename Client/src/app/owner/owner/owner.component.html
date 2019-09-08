@@ -17,4 +17,55 @@
     </div>
   </div>
 </nav>
+
+
+
+
+
+
+
+
+
+
+<!-- <input type="text" #name="ngModel" name="name" class="form-control" placeholder="chat"
+
+[(ngModel)]="messSentFromAnguler">
+
+<button name="send" (click)=sendMessage() >send</button> -->
+
+
+
+
+
+
+
+
+
+
+
+<div *ngFor="let chat of chats; index as i;">
+
+    <div class="chat" [ngStyle]="setMyStyles(i)">
+        <div class="chat-title">
+          <h1>Hind Elshiwy {{i}}</h1>
+          <h2>  </h2>
+          <figure class="avatar">
+            <img src="https://scontent-hbe1-1.xx.fbcdn.net/v/t1.0-9/67635503_2312863945645938_2246338006854139904_n.jpg?_nc_cat=101&_nc_oc=AQkIIHhRwxDNJSsX3HlKl1wpUM6sMy61w1w0_XFbc1xOlauF-jZ5J4HH8k8cRnj6LaM&_nc_ht=scontent-hbe1-1.xx&oh=0bc4c6856a45eea96a8b4c16ef476946&oe=5E017991" /></figure>
+        </div>
+        <div class="messages">
+          <div class="messages-content" >
+            <p *ngFor="let message of chat.messageArray" [ngClass]="(message.senderid=='1')?'my-class1':'my-class2'"> {{message.message}} </p><br>
+            
+          </div>
+        </div>
+        <div class="message-box">
+          <textarea type="text"  #lala class="message-input" placeholder="Type message..."  ></textarea>
+          <button type="submit" (click)="sendMessage(i,lala.value); lala.value=''" class="message-submit">Send</button>
+        </div>
+      
+      </div>
+      <!-- <div class="bg"></div> -->
+</div>
+
+
 <router-outlet></router-outlet>

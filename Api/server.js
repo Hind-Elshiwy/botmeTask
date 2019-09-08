@@ -1,4 +1,4 @@
-const port = 3000;
+// const port = 3000;
 const express = require("express"),
   path = require("path"),
   cors = require("cors"),
@@ -9,118 +9,164 @@ const express = require("express"),
   productRoutes = require("./Routes/productRoutes"),
   cartRoutes = require("./Routes/cartRoutes"),
   wishlistRoutes = require("./Routes/wishlistRoutes"),
-  // PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN,
   shoppingCartModel = require('./Models/shoppingcart.model'),
   productSchema = require("./Models/product.model"),
   request = require('request'),
   fbTemplate = require('fb-message-builder');
-  PAGE_ACCESS_TOKEN="EAAiQLlHOQ7EBABZB6ZCgZBhGOdBZCCroExAvkBYcZAW7GCZAouTosvsmp287YqEoZBeQki1qfbEMBthDHsNF4C37a2EhAv4PzpQfE9ZATTRxVYiQpVPNL1i4FwrKLfFopRrfOkULsSuj7ODXsI1UkoYTBUaPBVgIhzMIXQ7vFCeySwZDZD"
+var http = require('http');
+PAGE_ACCESS_TOKEN = "EAAiQLlHOQ7EBABZB6ZCgZBhGOdBZCCroExAvkBYcZAW7GCZAouTosvsmp287YqEoZBeQki1qfbEMBthDHsNF4C37a2EhAv4PzpQfE9ZATTRxVYiQpVPNL1i4FwrKLfFopRrfOkULsSuj7ODXsI1UkoYTBUaPBVgIhzMIXQ7vFCeySwZDZD"
 // console.log(PAGE_ACCESS_TOKEN)
-
+count = 0
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 function handleMessage(sender_psid, received_message) {
-  console.log("nodyyyyyyy")
-  console.log(received_message.length)
+
+  console.log("nodyyyyyyy " + count)
+  console.log(received_message)
   // console.log(received_message.text + "hhhhhhhh")
   let response;
   let attachment_url;
-  // Check if the message contains text
-  if (received_message.length > 0) {
-    // Create the payload for a basic text message
-    // response = {
-    //   "text": `You sent the message: "${received_message.text}". Now send me an image!`
-    // }
-
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": []
+  if (received_message.text == "list") {
+    productSchema.find({}, (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        // Check if the message contains text
+        if (result.length > 0) {
+          response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": []
+              }
+            }
+          }
+          result.forEach(item => {
+            attachment_url = "https://4.bp.blogspot.com/-_76hP7FTFr0/XHdfP0L1HhI/AAAAAAAAAGA/RM4D0PGpgnQUQi4W-402KIIURQnb-KtSACLcBGAs/s1600/Anahita%2BHashemzade%2BBio%252C%2BAge%252C%2BFamily%252C%2BWiki%252C%2BHD%2BWallpaper%252C%2BHD%2Bpics.jpg";
+            //let attachment_url = "/home/more/Desktop/botmeTask-master-massenger/Api/uploads/2019-08-03T21:42:12.579Z7ff6d0bc3c29eed66e5386479feceaf2.jpg"
+            response.attachment.payload.elements.push({
+              "title": item.name,
+              "subtitle": item.desc,
+              "image_url": attachment_url,
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Add to Cart",
+                  "payload": item._id,
+                },
+              ],
+            })
+          })
+          callSendAPI(sender_psid, response);
         }
       }
-    }
-    received_message.forEach(item => {
-      attachment_url = "https://4.bp.blogspot.com/-_76hP7FTFr0/XHdfP0L1HhI/AAAAAAAAAGA/RM4D0PGpgnQUQi4W-402KIIURQnb-KtSACLcBGAs/s1600/Anahita%2BHashemzade%2BBio%252C%2BAge%252C%2BFamily%252C%2BWiki%252C%2BHD%2BWallpaper%252C%2BHD%2Bpics.jpg";
-      //let attachment_url = "/home/more/Desktop/botmeTask-master-massenger/Api/uploads/2019-08-03T21:42:12.579Z7ff6d0bc3c29eed66e5386479feceaf2.jpg"
-      response.attachment.payload.elements.push({
-        "title": item.name,
-        "subtitle": item.desc,
-        "image_url": attachment_url,
-        "buttons": [
-          {
-            "type": "postback",
-            "title": "Add to Cart",
-            "payload": item._id,
-          },
-        ],
-      })
-    })
-     // Sends the response message
-     callSendAPI(sender_psid, response);
-
+    });
+    return;
+  }else {
+    io.emit('new message', {senderid:sender_psid, message:received_message.text});
   }
-
-  // console.log(response.text)
  
+
 }
-let message;
 // Handles messages events
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback,kind) {
-  let prod_id=received_postback.payload;
+function handlePostback(sender_psid, received_postback, kind) {
+  let prod_id = received_postback.payload;
+
   //let name=received_postback.payload.name;
-  sender_psid=sender_psid;
-shoppingCartModel.getWithPsid({ sender_psid ,kind})
-  .then(Cart => {
-    if(Cart){ 
-console.log(Cart+"lololololololo")
-
-      const indexFound = Cart.items.findIndex(item => {
-        console.log(item.product + "LaLALAALLALALALA")
-        return item._id == prod_id;
-      });
-      if(indexFound !== -1){
-        Cart.items[indexFound].quantity += 1;
-        // cart.totalPrice += (cart.items[indexFound].product.price * quantity);
-      } else{
-        Cart.items.push({
-          product: prod_id,
-          quantity: 1,
-        });
+  sender_psid = sender_psid;
+  if (prod_id == "get_start") {
+    productSchema.find({}, (err, result) => {
+      if (err) {
+        console.log(err)
       }
-    console.log(Cart +"jjjjjjjjjjjjjjjjj")
-    // return Promise.reject("Error")
-       Cart.save();
+      else {
+        let response;
+        let attachment_url;
+        // Check if the message contains text
+        if (result.length > 0) {
+          response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": []
+              }
+            }
+          }
+          result.forEach(item => {
+            attachment_url = "https://4.bp.blogspot.com/-_76hP7FTFr0/XHdfP0L1HhI/AAAAAAAAAGA/RM4D0PGpgnQUQi4W-402KIIURQnb-KtSACLcBGAs/s1600/Anahita%2BHashemzade%2BBio%252C%2BAge%252C%2BFamily%252C%2BWiki%252C%2BHD%2BWallpaper%252C%2BHD%2Bpics.jpg";
+            //let attachment_url = "/home/more/Desktop/botmeTask-master-massenger/Api/uploads/2019-08-03T21:42:12.579Z7ff6d0bc3c29eed66e5386479feceaf2.jpg"
+            response.attachment.payload.elements.push({
+              "title": item.name,
+              "subtitle": item.desc,
+              "image_url": attachment_url,
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Add to CtWithPsid({ sart",
+                  "payload": item._id,
+                },
+              ],
+            })
+          })
+          callSendAPI(sender_psid, response);
+        }
+      }
+    });
+    return;
+  }
+  shoppingCartModel.getWithPsid({ sender_psid, kind })
+    .then(Cart => {
+      if (Cart) {
+        console.log(Cart + "lololololololo")
 
-      productSchema.findById(prod_id)
-      .then(res => {
-         response = {
-          "text": `${res.name} Was Added`
+        const indexFound = Cart.items.findIndex(item => {
+          console.log(item.product + "LaLALAALLALALALA")
+          return item._id == prod_id;
+        });
+        if (indexFound !== -1) {
+          Cart.items[indexFound].quantity += 1;
+          // cart.totalPrice += (cart.items[indexFound].product.price * quantity);
+        } else {
+          Cart.items.push({
+            product: prod_id,
+            quantity: 1,
+          });
         }
-       
-       callSendAPI(sender_psid, response);
-      })
-      .catch(err=>{
-        response = {
-          "text": `Product is not Found`
-        }
-       
-       callSendAPI(sender_psid, response);
-      })
-     } 
-  })
-  .catch(err => {    
-    response = {
-      "text": `it is not added to the cart`
-    }
-   callSendAPI(sender_psid, response);
+        console.log(Cart + "jjjjjjjjjjjjjjjjj")
+        // return Promise.reject("Error")
+        Cart.save();
+
+        productSchema.findById(prod_id)
+          .then(res => {
+            response = {
+              "text": `${res.name} Was Added`
+            }
+
+            callSendAPI(sender_psid, response);
+          })
+          .catch(err => {
+            response = {
+              "text": `Product is not Found`
+            }
+
+            callSendAPI(sender_psid, response);
+          })
+      }
+    })
+    .catch(err => {
+      response = {
+        "text": `it is not added to the cart`
+      }
+      callSendAPI(sender_psid, response);
       console.log(err)
-   });
+    });
 
 
-  console.log(received_postback.payload+"  postback y 7agahhhh")
+  console.log(received_postback.payload + "  postback y 7agahhhh")
 }
 
 // // Sends response messages via the Send API
@@ -157,6 +203,11 @@ function callSendAPI(sender_psid, response) {
 // const authenticate = require("./middleware/jwt");
 const server = express();
 
+
+
+
+
+
 mongoose.connect(
   "mongodb://localhost:27017/botme",
   // "mongodb+srv://deb402595:hindhindhind@cluster0-wcpha.mongodb.net/test?retryWrites=true&w=majority",
@@ -177,14 +228,14 @@ server.use('/uploads', express.static('uploads'));
 server.use(cors({ origin: true }));
 server.use(bodyParser.json());
 
+// server.get('/hind', (req,res) => {
+//   res.status(200).json({msg: "Hello today"})
+// })
 server.use("/api/user", userRoutes);
 // Authentication midleware
 // server.use(authenticate);
 
-server.get('/', (req, res) => {
-  console.log(req._id);
-  res.send("hello world");
-});
+
 
 
 // Adds support for GET requests to our webhook
@@ -200,7 +251,7 @@ server.get('/webhook', (req, res) => {
   if (mode && token) {
 
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {       
 
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
@@ -219,7 +270,6 @@ server.get('/webhook', (req, res) => {
 
 
 
-
 // Creates the endpoint for our webhook 
 server.post('/webhook', (req, res) => {
   let body = req.body;
@@ -229,56 +279,52 @@ server.post('/webhook', (req, res) => {
   if (body.object === 'page') {
 
     // Iterates over each entry - there may be multiple if batched
-    body.entry.forEach(function (entry) {
-      // Gets the message. entry.messaging is an array, but 
-      // will only ever contain one message, so we get index 0
-      let webhook_event = entry.messaging[0];
-      console.log(webhook_event+"webhook eventosss");
-      // console.log(webhook_event.sender.id);
+    //body.entry.forEach(function (entry) {
+    // Gets the message. entry.messaging is an array, but 
+    // will only ever contain one message, so we get index 0
+    let webhook_event = body.entry[0].messaging[0];
+    console.log(webhook_event + "webhook eventosss");
+    // console.log(webhook_event.sender.id);
 
-      // Get the sender PSID
-       let sender_psid = webhook_event.sender.id;
-      console.log('Sender PSID: ' + sender_psid);
+    // Get the sender PSID
+    let sender_psid = webhook_event.sender.id;
+    console.log('Sender PSID: ' + sender_psid);
 
 
 
-      shoppingCartModel.getWithPsid({ sender_psid, kind })
-        .then(cart => {
-          if (cart) {
-            console.log(cart)
-          }
-          else {
-            //console.log('Cart Not Found')
-            const cartData = {
-              psid: sender_psid,
-              items: [],
-              totalPrice: 0
-            };
-            cart = new shoppingCartModel(cartData);
-            cart.save();
-          }
-          productSchema.find({}, (err, result) => {
-            if (err) {
-              console.log(err)
-            }
-            else {
-              // Check if the event is a message or postback and
-              // pass the event to the appropriate handler function
-              if (webhook_event.message) {
-                console.log(webhook_event.message + "hindooooooooooooooooooooo")
-                handleMessage(sender_psid, result);
-              } else if (webhook_event.postback) {
-                console.log(webhook_event.postback+"gogoooooooooooos")
-                console.log(sender_psid)
-                handlePostback(sender_psid, webhook_event.postback,kind);
-              }
-            }
-          });
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    });
+    shoppingCartModel.getWithPsid({ sender_psid, kind })
+      .then(cart => {
+        if (cart) {
+          console.log(cart)
+        }
+        else {
+          //console.log('Cart Not Found')
+          const cartData = {
+            psid: sender_psid,
+            items: [],
+            totalPrice: 0
+          };
+          cart = new shoppingCartModel(cartData);
+          cart.save();
+        }
+    
+
+        // Check if the event is a message or postback and
+        // pass the event to the appropriate handler function
+        if (webhook_event.message) {
+          console.log(webhook_event + "hindooooooooooooooooooooo")
+          handleMessage(sender_psid, webhook_event.message);
+        } else if (webhook_event.postback) {
+          console.log(webhook_event.postback + "gogoooooooooooos")
+          console.log(sender_psid)
+          handlePostback(sender_psid, webhook_event.postback, kind);
+        }
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    //});
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
@@ -290,13 +336,18 @@ server.post('/webhook', (req, res) => {
 });
 
 
-
-
+//Use Angular Builded Part 
+// server.use(express.static(path.join(__dirname,"dist/client")));
+// server.use(express.static(path.join(__dirname,'/dist/client/assets')));
 
 server.use("/api/product", productRoutes);
 server.use("/api/cart", cartRoutes);
 server.use("/api/wishlistcart", wishlistRoutes);
 
+// Send all requests to index.html
+// server.get('*', (req, res)=> {
+//   res.sendFile(path.join(__dirname + '/dist/client/index.html'));
+// });
 
 server.use((err, req, res, next) => {
   console.log(err);
@@ -309,15 +360,28 @@ server.use((err, req, res, next) => {
     res.status(404).json(err)
 });
 
-// Send all requests to index.html
-// server.get('/*', (req, res)=> {
-//   res.sendFile(path.join(__dirname + '/dist/client/index.html'));
-// });
+var app = http.createServer(server);
+var io = require('socket.io').listen(app);
 
-// server.listen(process.env.PORT || 3000, function(){
-//   console.log('Your node js server is running');
-// });
+io.on('connection', (socket) => {
 
-server.listen(port, () => {
-  console.log(`I am Listening on port ${port}`);
+  console.log('new connection madee.');
+
+
+
+  socket.on('message', function (data) {
+    console.log(data.senderid +"zozoooooooooooooo")
+    response = {
+      "text": data.message
+    }
+    callSendAPI(data.senderid, response);
+
+    // io.emit('new message', {message:"Thank you LaLa Again"});
+  })
+
+});
+
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Your node js server is running');
 });

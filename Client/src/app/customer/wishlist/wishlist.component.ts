@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cart } from 'src/app/sharedServices/cart';
 import { wishlistService } from 'src/app/sharedServices/wishlist.service';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -9,6 +11,8 @@ import { wishlistService } from 'src/app/sharedServices/wishlist.service';
 })
 export class WishlistComponent implements OnInit {
   private myCart : Cart
+  weburl = environment.apiBaseUrl
+
   constructor(private wishlistservice: wishlistService, private router: Router) { }
 
   ngOnInit() {
