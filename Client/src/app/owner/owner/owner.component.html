@@ -6,9 +6,14 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/owners/owner/profile']">Profile</a>
-      <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/owners/owner/newproduct']">New Product</a>
-      <a class="nav-item nav-link " routerLinkActive="active" [routerLink]="['/owners/owner/products']">My Products</a>
+        <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/owners/owner/profile']">  {{ 'HOME.Profile' | translate }}</a>
+      <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/owners/owner/newproduct']"> {{ 'HOME.NewProduct' | translate }}</a>
+      <a class="nav-item nav-link " routerLinkActive="active" [routerLink]="['/owners/owner/products']"> {{ 'HOME.MyProducts' | translate }}</a>
+    </div>
+    <div>
+      <select #langSelect (change)="translate.use(langSelect.value)">
+        <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+      </select> 
     </div>
     <div class="navbar-nav ml-auto">
       <a class="nav-item nav-link btn">{{userService.user?.name}}</a>
@@ -54,7 +59,9 @@
         </div>
         <div class="messages">
           <div class="messages-content" >
-            <p *ngFor="let message of chat.messageArray" [ngClass]="(message.senderid=='1')?'my-class1':'my-class2'"> {{message.message}} </p><br>
+            <div *ngFor="let message of chat.messageArray" class="msg_block" [ngClass]="(message.senderid=='1')?'my-class1':'my-class2'">
+              <p > {{message.message}} </p>
+            </div>
             
           </div>
         </div>

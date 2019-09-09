@@ -3,7 +3,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/sharedServices/chat.service';
 import { Chat } from './chat';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-owner',
@@ -16,7 +16,14 @@ export class OwnerComponent implements OnInit {
   chats:Chat[] = []
   //senderid:Number;
 
-  constructor(private userService: UserService, private router: Router,private chatService:ChatService) {
+  constructor(private userService: UserService, private router: Router,private chatService:ChatService,public translate: TranslateService) {
+    translate.addLangs(['en', 'ar']);
+    translate.setDefaultLang('en');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|ar/) ? browserLang : 'en');
+
+
 
       this.chatService.newMessageReceived()
         .subscribe(data=> {

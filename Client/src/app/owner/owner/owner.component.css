@@ -494,16 +494,27 @@ Bounce
   
 
 
-
 .my-class1{
-  position: relative;
-  right: 0px;
+  text-align: right;
+  }
+
+.my-class1 p{
+  color: #fff;
+  background-color: #0072ff;
 }
 
-
 .my-class2{
-position: relative;
-left: 0px;  
-
-box-align: right;
+  text-align: left;
+}
+.my-class2 p{
+  color: #000;
+  background-color: #ccc;
+}
+.msg_block p{
+  margin: 5px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 14px;
+  display: inline-block;
 }

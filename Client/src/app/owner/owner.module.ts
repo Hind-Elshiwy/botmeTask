@@ -7,7 +7,20 @@ import { NewProductComponent } from './new-product/new-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { OwnerRoutingModule } from './owner-routing.module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {TranslateModule , TranslateLoader } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
+
+
+
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+} 
+
 
 @NgModule({
   declarations: [
@@ -23,6 +36,13 @@ import { HttpClientModule } from '@angular/common/http';
     OwnerRoutingModule,
     FormsModule,
     HttpClientModule,
+    TranslateModule.forChild({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
+        }
+    })
   ]
 })
 export class OwnerModule { }

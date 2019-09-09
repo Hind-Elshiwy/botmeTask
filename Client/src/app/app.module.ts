@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { from } from 'rxjs';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import {TranslateModule , TranslateLoader } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
@@ -45,7 +47,10 @@ export const reducers: ActionReducerMap<AppState>={
 // } 
 
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+} 
 
 
 
@@ -65,7 +70,15 @@ export const reducers: ActionReducerMap<AppState>={
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers ,{} ),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    HttpClientModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    })
     // FullCalendarModule // for FullCalendar!
   ],
   providers: [{
